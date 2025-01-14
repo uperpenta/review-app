@@ -1,25 +1,40 @@
-import mongoose from "mongoose";
-import { Schema } from "mongoose";
+import {Document, model , Schema} from "mongoose";
+import { z } from "zod";
 
+export type TReview = {
+    name: string;
+    email: string;
+    comment: string;
+    rating: number;
+    likes: number;
+};
 
-const reviewSchema = new mongoose.Schema({
+export interface IReview extends TReview, Document {}
+
+const reviewSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: true,
     },
-    rating: {
-        type: Number,
-        required: true
+    email: {
+        type: String,
+        required: true,
     },
     comment: {
         type: String,
-        required: true
+        required: true,
+    },
+    rating: {
+        type: Number,
+        required: true,
     },
     likes: {
         type: Number,
         default: 0,
-        required: true,
-
-    }
-    
+    },
 });
+
+const Review = model<IReview>("Review", reviewSchema);
+
+export default Review;
+

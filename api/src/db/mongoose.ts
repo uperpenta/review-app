@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import connect from 'mongoose';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -8,24 +9,25 @@ const dbUser = process.env.MONGODB_USER as string;
 const dbPassword = process.env.MONGODB_PASSWORD as string;
 const dbUrl = `mongodb://${dbUser}:${dbPassword}@localhost:27017/${dbName}`;
 
-mongoose
-    .connect(dbUrl, { 
-        family: 4,
-    })
-    .then(() => {
+const connectDb = async () => {
+    try {
+        await mongoose.connect(dbUrl);
         console.log("Connected to MongoDB");
-    })
-    .catch((err) => {
-        console.log("Error Connecting: " + err);
-    });
+    } catch (error) {
+        console.error("Error connecting to MongoDB:", error);
+        process.exit(1);
+    }
+};
 
-    process.on('SIGINT', async () => {
-        try {
-          await mongoose.connection.close();
-          console.log('MongoDB connection closed');
-          process.exit(0);
-        } catch (err) {
-          console.error('Error closing MongoDB connection', err);
-          process.exit(1);
-        }
-      });
+process.on('SIGINT', async () => {
+    try {
+        await mongoose.connection.close();
+        console.log('MongoDB connection closed');
+        process.exit(0);
+    } catch (error) {
+        console.error('Error closing MongoDB connection', error);
+        process.exit(1);
+    }
+});
+
+export default connectDb;
