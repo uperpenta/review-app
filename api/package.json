@@ -1,6 +1,7 @@
 {
   "type": "module",
   "dependencies": {
+    "arg": "^5.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
@@ -14,11 +15,13 @@
     "globals": "^15.14.0",
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0"
   },
   "scripts": {
-    "dev": "nodemon --watch src --ext ts --exec \"node --loader ts-node/esm\" src/app.ts",
-    "start": "tsc && node ./dist/app.js"
+  "testdev": "nodemon --watch src --ext ts --exec \"tsc --noEmit && node -r ts-node/esm src/app.ts\"",
+  "dev": "nodemon --watch src --ext ts --exec \"tsc --noEmit && node --loader ts-node/esm src/app.ts\"",
+  "start": "tsc && node ./dist/app.js"
   }
 }

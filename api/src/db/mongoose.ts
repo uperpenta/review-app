@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import connect from 'mongoose';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -7,8 +6,7 @@ dotenv.config();
 const dbName = process.env.MONGODB_NAME as string;
 const dbUser = process.env.MONGODB_USER as string;
 const dbPassword = process.env.MONGODB_PASSWORD as string;
-const dbUrl = `mongodb://${dbUser}:${dbPassword}@localhost:27017/${dbName}`;
-
+const dbUrl = `mongodb://${dbUser}:${dbPassword}@localhost:27017/${dbName}?authSource=${dbName}`;
 const connectDb = async () => {
     try {
         await mongoose.connect(dbUrl);

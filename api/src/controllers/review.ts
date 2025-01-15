@@ -18,9 +18,18 @@ const reviewController = {
         } catch (error) {
             res.status(500).json({error: "Failed to get reviews"});
         }
+    },
+
+    getReview: async (req: any, res: any) => {
+        try {
+            const reviewId = req.params.id;
+            const review = await Review.findById(reviewId);
+            res.status(200).json(review);
+        } catch (error) {
+            res.status(500).json({error: "Failed to get review"});
+        }
     }
 
-    addLike
-
-    removeLike
 }
+
+export default reviewController;

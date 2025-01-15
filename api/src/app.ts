@@ -1,6 +1,6 @@
 import express from 'express';
-
 import dotenv from 'dotenv';
+import 'tsconfig-paths/register';
 import connectDb from './db/mongoose';
 
 dotenv.config();
@@ -10,6 +10,10 @@ const app = express();
 connectDb();
 
 app.use(express.json());
+
+app.get('/test', (req, res) => {
+    res.send('test');
+});
 
 app.use('/',() => {
     console.log('App is running');

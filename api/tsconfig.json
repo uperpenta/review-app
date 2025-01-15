@@ -1,14 +1,18 @@
 {
   "compilerOptions": {
-    "target": "ESNext",                               // Use modern JavaScript syntax
-    "lib": ["ESNext"],                                // Use modern libraries
-    "module": "ESNext",                               // Enable ES Modules
-    "rootDir": "./src",                               // Specify the root directory for your source files
-    "outDir": "./dist",                               // Output directory for compiled files
-    "moduleResolution": "node",                      // Use Node.js module resolution
-    "resolveJsonModule": true,                       // Allow importing JSON files
-    "allowJs": true,                                 // Allow using JavaScript files
-    "sourceMap": true,                               // Enable source maps for debugging
+    "module": "ESNext",
+    "target": "ESNext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "lib": ["ESNext"],
+    "baseUrl": "./",                              
+    "paths": {
+      // "@dbconfig/*" : ["./src/db/*"],
+      "tsconfig-paths/*" : ["./node_modules/tsconfig-paths/*"],
+    },
+    
 
     /* Interop Constraints */
     "isolatedModules": true,                         // Emit one file per module
@@ -20,11 +24,12 @@
     "noImplicitAny": true,                           // Disallow implicit `any` types
     "useUnknownInCatchVariables": false,             // Opt-out of `unknown` for `catch` variables
     "noFallthroughCasesInSwitch": true,              // Disallow fallthrough cases in switch statements
-    "skipLibCheck": true                             // Skip type checking of declaration files
+    "skipLibCheck": true,                             // Skip type checking of declaration files
   },
   "include": ["./src/**/*"],                          // Include all TypeScript files in `src`
   "exclude": ["node_modules", "cypress", "dist"],     // Exclude unnecessary folders
   "ts-node": {
-    "esm": true                                       // Enable ES Modules for `ts-node`
+    "esm": true,
+    "experimentalSpecifierResolution": "node",                                       // Enable ES Modules for `ts-node`
   }
 }
