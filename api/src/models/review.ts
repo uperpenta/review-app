@@ -6,7 +6,7 @@ export type TReview = {
     email: string;
     comment: string;
     rating: number;
-    likes: number;
+    likesCount: number;
 };
 
 export interface IReview extends TReview, Document {}
@@ -28,7 +28,7 @@ const reviewSchema = new Schema({
         type: Number,
         required: true,
     },
-    likes: {
+    likesCount: {
         type: Number,
         default: 0,
     },

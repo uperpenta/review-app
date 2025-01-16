@@ -1,9 +1,6 @@
 import express from 'express';
-import dotenv from 'dotenv';
-import 'tsconfig-paths/register';
 import connectDb from './db/mongoose';
-
-dotenv.config();
+import reviewRouter from './routes/index';
 
 const app = express();
 
@@ -15,15 +12,12 @@ app.get('/test', (req, res) => {
     res.send('test');
 });
 
-app.use('/',() => {
-    console.log('App is running');
-});
-
 const port = process.env.PORT;
 app.listen(port,() => {
     console.log(`Server running on port ${port}`);
 });
 
+app.use(reviewRouter);
 
 //Faci asta pentru un website pentru cineva care lucrează în construcții și își oferă serviciile pe website, freelancer. Și scrie niște endpoint uri care fac următoarele chestii: 
 //- POST review (gen între o stea și 5 stele, plus comentarii) 

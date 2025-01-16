@@ -1,7 +1,4 @@
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const dbName = process.env.MONGODB_NAME as string;
 const dbUser = process.env.MONGODB_USER as string;
@@ -12,6 +9,7 @@ const connectDb = async () => {
         await mongoose.connect(dbUrl);
         console.log("Connected to MongoDB");
     } catch (error) {
+        console.log(process.env.MONGODB_PASSWORD);
         console.error("Error connecting to MongoDB:", error);
         process.exit(1);
     }
