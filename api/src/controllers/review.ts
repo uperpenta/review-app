@@ -1,6 +1,6 @@
 import Review, {IReview, TReview} from "../models/review";
+import ClientInfo from "../models/clientInfo";
 import express from "express";
-
 
 const reviewController = {
     createReview: async (req: express.Request, res: express.Response) => {
@@ -20,6 +20,10 @@ const reviewController = {
     getReviews: async (_req: express.Request, res: express.Response) => {
         try {
             const reviews = await Review.find();
+            if(reviews.length === 0){
+                res.status(404).json({error: "No reviews found"});
+                return;
+            }
             res.status(200).json(reviews);   
         } catch (error) {
             res.status(500).json({error: "Failed to get reviews"});
@@ -30,13 +34,32 @@ const reviewController = {
         try {
             const reviewId = req.params.id;
             const review = await Review.findById(reviewId);
+            if(!review){
+                res.status(404).json({error: "Review not found"});
+                return;
+            }
             res.status(200).json(review);
         } catch (error) {
             res.status(500).json({error: "Failed to get review"});
         }
     },
 
-    likeReview: async (req: express.Request, res: express.Response) => {
+    updateReview: async( req: express.Request, res: express.Response) => {
+        try {
+            const reviewId=req.params.id;
+            const review = await Review.findById(reviewId);
+            if (!review){
+                res.status(404).json({error: "Review not found"});
+                return;
+            }
+            const updatedReview = await Review.findByIdAndUpdate(reviewId, req.body, {new: true});
+            res.status(200).json(updatedReview);
+        } catch (error) {
+            res.status(500).json({error: "Failed to update review"});
+        }
+    },
+
+    deleteReview: async (req: express.Request, res: express.Response) => {
         try {
             const reviewId = req.params.id;
             const review = await Review.findById(reviewId);
@@ -44,15 +67,49 @@ const reviewController = {
                 res.status(404).json({error: "Review not found"});
                 return;
             }
+            await review.deleteOne();
+            res.status(200).json({message: "Review deleted"});
+        } catch (error) {
+            res.status(500).json({error: "Failed to delete review"});
+        }
+    },
+
+    likeReview: async (req: express.Request, res: express.Response) => {
+        try {
+            const reviewId = req.params.id;
+            const review = await Review.findById(reviewId);
+            const clientIp = req.headers['x-forwarded-for'] as string;
+            const clientUserAgent = req.headers['user-agent'] as string;
+            const client = {
+                ip: clientIp,
+                userAgent: clientUserAgent,
+            };
+            let clientInfo = await ClientInfo.findOne(client);
+
+            if (!review) {
+                res.status(404).json({error: "Review not found"});
+                return;
+            }
+
+            if (!clientInfo) {
+                clientInfo = new ClientInfo({ ...client, likedReviews: [] });
+                await clientInfo.save();
+            }
+
+            if (clientInfo.likedReviews.includes(reviewId)) {
+                res.status(400).json({error: "You already liked this review"});
+                return;
+            } 
+
             review.likesCount++;
             await review.save();
+            await ClientInfo.updateOne(client, { $push: { likedReviews: reviewId } });
+
             res.status(200).json(review);
         } catch (error) {
             res.status(500).json({error: "Failed to like review"});
         }
     },
-
-    
 
 }
 

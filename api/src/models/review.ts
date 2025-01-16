@@ -11,7 +11,7 @@ export type TReview = {
 
 export interface IReview extends TReview, Document {}
 
-const reviewSchema = new Schema({
+const reviewSchema = new Schema({  
     name: {
         type: String,
         required: true,
