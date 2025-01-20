@@ -1,4 +1,4 @@
-import Review, {IReview, TReview} from "../models/review";
+import Review, {IReview} from "../models/review";
 import ClientInfo from "../models/clientInfo";
 import express from "express";
 

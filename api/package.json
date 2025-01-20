@@ -1,5 +1,5 @@
 {
-  "type": "module",
+  "type": "commonjs",
   "dependencies": {
     "arg": "^5.0.2",
     "cors": "^2.8.5",
@@ -21,6 +21,6 @@
   "scripts": {
     "testdev": "nodemon --watch src --ext ts --exec \"tsc --noEmit && node -r ts-node/esm src/app.ts\"",
     "dev": "nodemon --watch src --ext ts --exec \"tsc --noEmit && node --env-file=.env --loader ts-node/esm src/app.ts\"",
-    "start": "tsc && node ./dist/app.js"
+    "start": "tsc && node --env-file=.env ./dist/app.js"
   }
 }

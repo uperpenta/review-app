@@ -1,5 +1,5 @@
 import {Document, model , Schema} from "mongoose";
-import { z } from "zod";
+//import { z } from "zod"; TODO VALIDATION
 
 export type TReview = {
     name: string;

@@ -1,35 +1,23 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ESNext",
-    "moduleResolution": "bundler",
-    "noEmit": true,
-    "allowJs": true,
+    "module": "commonjs",
+    "target": "es6",
+    "outDir": "dist",
+    "strict": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "baseUrl": ".",
     "resolveJsonModule": true,
-    "lib": ["ESNext"],
-    "baseUrl": "./",                              
-    "paths": {
-      // "@dbconfig/*" : ["./src/db/*"],
-      "tsconfig-paths/*" : ["./node_modules/tsconfig-paths/*"],
-    },
-    
-
-    /* Interop Constraints */
-    "isolatedModules": true,                         // Emit one file per module
-    "esModuleInterop": true,                         // Interoperate with CommonJS modules
-    "forceConsistentCasingInFileNames": true,        // Enforce case sensitivity for imports
-
-    /* Type Checking */
-    "strict": true,                                  // Enable all strict type-checking options
-    "noImplicitAny": true,                           // Disallow implicit `any` types
-    "useUnknownInCatchVariables": false,             // Opt-out of `unknown` for `catch` variables
-    "noFallthroughCasesInSwitch": true,              // Disallow fallthrough cases in switch statements
-    "skipLibCheck": true,                             // Skip type checking of declaration files
+    "esModuleInterop": true,
   },
-  "include": ["./src/**/*"],                          // Include all TypeScript files in `src`
-  "exclude": ["node_modules", "cypress", "dist"],     // Exclude unnecessary folders
-  "ts-node": {
-    "esm": true,
-    "experimentalSpecifierResolution": "node",                                       // Enable ES Modules for `ts-node`
-  }
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+  ]
 }
