@@ -18,4 +18,4 @@ const clientInfo = new Schema({
 
 const ClientInfo = model("ClientInfo", clientInfo);
 
-export default ClientInfo
+export default ClientInfo;

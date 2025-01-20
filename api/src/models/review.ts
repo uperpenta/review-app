@@ -4,12 +4,12 @@ import {Document, model , Schema} from "mongoose";
 export type TReview = {
     name: string;
     email: string;
-    comment: string;
+    content: string;
     rating: number;
     likesCount: number;
 };
 
-export interface IReview extends TReview, Document {}
+export interface IReview extends TReview, Document {};
 
 const reviewSchema = new Schema({  
     name: {
@@ -20,7 +20,7 @@ const reviewSchema = new Schema({
         type: String,
         required: true,
     },
-    comment: {
+    content: {
         type: String,
         required: true,
     },

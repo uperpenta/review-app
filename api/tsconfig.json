@@ -1,4 +1,5 @@
 {
+  "compileOnSave": true,
   "compilerOptions": {
     "module": "commonjs",
     "target": "es6",
@@ -11,8 +12,12 @@
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "rootDir": "src",
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "paths": {
+      "@dbConfig/*":["./src/db/*"],
+    }
   },
   "include": [
     "./src/**/*"
