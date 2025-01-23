@@ -14,6 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const review_1 = __importDefault(require("../models/review"));
 const clientInfo_1 = __importDefault(require("../models/clientInfo"));
+const getClientIp = (req) => {
+    const clientIp = req.headers['x-forwarded-for'];
+    return clientIp ? clientIp : null;
+};
 const reviewController = {
     createReview: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
@@ -90,17 +94,18 @@ const reviewController = {
         try {
             const reviewId = req.params.id;
             const review = yield review_1.default.findById(reviewId);
-            const clientIp = req.headers['x-forwarded-for'];
-            const clientUserAgent = req.headers['user-agent'];
-            const client = {
-                ip: clientIp,
-                userAgent: clientUserAgent,
-            };
-            let clientInfo = yield clientInfo_1.default.findOne(client);
             if (!review) {
                 res.status(404).json({ error: "Review not found" });
                 return;
             }
+            const clientIp = getClientIp(req);
+            if (!clientIp) {
+                res.status(400).json({ error: "Header 'x-forwarded-for' missing" });
+                return;
+            }
+            const clientUserAgent = req.headers['user-agent'];
+            const client = { ip: clientIp, userAgent: clientUserAgent };
+            let clientInfo = yield clientInfo_1.default.findOne(client);
             if (!clientInfo) {
                 clientInfo = new clientInfo_1.default(Object.assign(Object.assign({}, client), { likedReviews: [] }));
                 yield clientInfo.save();
@@ -115,7 +120,27 @@ const reviewController = {
             res.status(200).json(review);
         }
         catch (error) {
+            console.error("Error in likeReview:", error);
             res.status(500).json({ error: "Failed to like review" });
+        }
+    }),
+    getLikes: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const clientIp = req.headers['x-forwarded-for'];
+            if (!clientIp) {
+                res.status(404).json({ error: "Header missing: 'x-forwarded-for'" });
+                return;
+            }
+            const clientLikes = yield clientInfo_1.default.findOne({ ip: clientIp }, { likes: 1, _id: 0 });
+            if (!clientLikes) {
+                res.status(404).json({ error: "Client info not found" });
+                return;
+            }
+            res.status(200).json(clientLikes);
+        }
+        catch (error) {
+            console.error("Error in getlikes:", error);
+            res.status(500).json({ error: "Failed to get client info" });
         }
     }),
 };

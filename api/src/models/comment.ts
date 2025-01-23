@@ -22,10 +22,10 @@ const commentSchema = new Schema({
     },
     createdAt: {
         type: Date,
-        required: true
+        required: false,
     },
     reviewId: {
-        type: Number,
+        type: String,
         required: true
     }
 });
