@@ -1,6 +1,6 @@
 import express from 'express';
 import connectDb from './db/mongoose';
-import {reviewRouter, commentRouter } from './routes/index';
+import router from './routes/index';
 import process from 'process';
 
 const port = process.env.PORT;
@@ -11,8 +11,7 @@ connectDb();
 
 app.use(express.json());
 
-app.use(reviewRouter);
-app.use(commentRouter);
+app.use(router);
 
 app.listen(port,() => {
     console.log(`Server running on port ${port}`);
