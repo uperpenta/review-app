@@ -1,4 +1,3 @@
-import { response } from 'express';
 import {model, Schema} from 'mongoose';
 
 export type TMessage = {
