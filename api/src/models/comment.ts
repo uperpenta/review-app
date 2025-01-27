@@ -1,6 +1,5 @@
 import {model, Schema} from "mongoose";
 
-
 export type TComment = {
     name: string;
     text: string;
@@ -27,7 +26,7 @@ const commentSchema = new Schema({
     reviewId: {
         type: String,
         required: true
-    }
+    },
 });
 
 const Comment = model<IComment>("Comment", commentSchema);

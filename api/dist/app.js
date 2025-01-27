@@ -5,13 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("./db/mongoose"));
-const index_1 = require("./routes/index");
-const port = process.env.PORT;
+const index_1 = __importDefault(require("./routes/index"));
+const process_1 = __importDefault(require("process"));
+const port = process_1.default.env.PORT;
 const app = (0, express_1.default)();
 (0, mongoose_1.default)();
 app.use(express_1.default.json());
-app.use(index_1.reviewRouter);
-app.use(index_1.commentRouter);
+app.use(index_1.default);
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
