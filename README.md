@@ -1,3 +1,3 @@
 # review-app
 
-This application serves as a portfolio and service platform for a construction freelancer, showcasing expertise, completed projects, and enabling clients to leave reviews, request quotes, and interact with testimonials.
+API for a freelancing site with multiple functionalities such as: Review for clients, replies for the reviews and IP-Based liking system, Live-Chat with the freelancer. 
