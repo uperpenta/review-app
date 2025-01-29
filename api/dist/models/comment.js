@@ -19,7 +19,7 @@ const commentSchema = new mongoose_1.Schema({
     reviewId: {
         type: String,
         required: true
-    }
+    },
 });
 const Comment = (0, mongoose_1.model)("Comment", commentSchema);
 exports.default = Comment;
